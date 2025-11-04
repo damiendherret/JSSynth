@@ -49,12 +49,12 @@ JSSynth
 
 2. **Build the Docker Image**: 
    ```
-   docker-compose build
+   docker compose build
    ```
 
 3. **Run the Application**: 
    ```
-   docker-compose up
+   docker compose up
    ```
 
 4. **Access the Application**: Open your web browser and navigate to `http://localhost:80`.
@@ -63,6 +63,3 @@ JSSynth
 - Modify the `nginx/default.conf` file to change routing rules as needed.
 - Update the `.env.example` file with your environment-specific configurations.
 - Add your static assets in the `public` directory.
-
-## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
