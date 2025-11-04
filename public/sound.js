@@ -1,30 +1,26 @@
-var dogBarkingBuffer = null;
+window.onload = init;
 var context;
-
-window.addEventListener('load', init, false);
+var bufferLoader;
 
 function init() {
-    try {
-        context = new AudioContext();
-    } catch (e) {
-        alert('Web Audio API is not supported in this browser');
-    }
+    context = new AudioContext();
+
+    bufferLoader = new BufferLoader(
+    context,
+    [
+        'file_example_WAV_1MG.wav'
+    ],
+    finishedLoading
+    );
+
+    bufferLoader.load();
 }
 
-function loadSound(url) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.responseType = 'arraybuffer';
+function finishedLoading(bufferList) {
+    // Create two sources and play them both together.
+    var source1 = context.createBufferSource();
+    source1.buffer = bufferList[0];
+    source1.connect(context.destination);
+    source1.noteOn(0);
 
-    // Decode asynchronously
-    request.onload = function() {
-        context.decodeAudioData(request.response, function(buffer) {
-            dogBarkingBuffer = buffer;
-        }, onError);
-    }
-    request.send();
 }
-
-document.getElementById('playBtn').addEventListener('click', () => {
-    loadSound('file_example_MP3_700KB.mp3');
-});

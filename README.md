@@ -1,47 +1,68 @@
-# js-synth-nginx
+# JSSynth Project
 
-## Project Overview
-This project is a simple web application that plays a  sound using the Web Audio API. It is designed to be served using Nginx in a Docker container.
+## Overview
+JSSynth is a web application that serves static content using Nginx. This project is structured to facilitate easy deployment using Docker.
 
-## File Structure
+## Project Structure
 ```
-js-synth-nginx
-├── public
-│   ├── index.html          # Main HTML document for the application
-│   ├── sound.js           # JavaScript code for audio playback
-│   └── file_example_MP3_700KB.mp3  # Audio file for playback
+JSSynth
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+├── .env.example
 ├── nginx
-│   └── default.conf       # Nginx server configuration
-├── Dockerfile              # Instructions to build the Docker image
-└── README.md               # Project documentation
+│   └── default.conf
+├── public
+│   ├── index.html
+│   ├── css
+│   │   └── styles.css
+│   └── js
+│       └── app.js
+└── README.md
 ```
+
+## Files Description
+
+- **Dockerfile**: Defines the Docker image for the application using the `nginx:alpine` base image. It copies the `public` directory to the Nginx HTML directory and sets up the default configuration for Nginx.
+
+- **docker-compose.yml**: Specifies the services, networks, and volumes for the application. It defines how to build the Docker image and run the Nginx service.
+
+- **.dockerignore**: Lists files and directories to be ignored by Docker during the image build process, helping to reduce the image size.
+
+- **.env.example**: A template for environment variables used in the application, containing key-value pairs for configuration settings.
+
+- **nginx/default.conf**: Contains the configuration settings for the Nginx server, defining how to serve the application, including the root directory and routing rules.
+
+- **public/index.html**: The main HTML file for the application, serving as the entry point for the web application.
+
+- **public/css/styles.css**: Contains the CSS styles for the application, defining the visual appearance of the web pages.
+
+- **public/js/app.js**: Contains the JavaScript code for the application, providing interactivity and functionality to the web pages.
 
 ## Setup Instructions
 
-1. **Clone the Repository**
-   Clone this repository to your local machine using:
+1. **Clone the Repository**: 
    ```
    git clone <repository-url>
+   cd JSSynth
    ```
 
-2. **Build the Docker Image**
-   Navigate to the project directory and build the Docker image using:
+2. **Build the Docker Image**: 
    ```
-   docker build -t js-synth-nginx .
-   ```
-
-3. **Run the Docker Container**
-   After building the image, run the container with:
-   ```
-   docker run -d -p 80:80 js-synth-nginx
+   docker-compose build
    ```
 
-4. **Access the Application**
-   Open your web browser and go to `http://localhost` to access the application.
+3. **Run the Application**: 
+   ```
+   docker-compose up
+   ```
 
-## Usage
-- Click the "Play" button in the application to hear the dog barking sound.
+4. **Access the Application**: Open your web browser and navigate to `http://localhost:80`.
 
-## Notes
-- Ensure that Docker is installed and running on your machine before attempting to build and run the application.
-- The application uses the Web Audio API, which is supported in most modern browsers.
+## Usage Guidelines
+- Modify the `nginx/default.conf` file to change routing rules as needed.
+- Update the `.env.example` file with your environment-specific configurations.
+- Add your static assets in the `public` directory.
+
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
