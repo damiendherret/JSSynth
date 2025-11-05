@@ -1,26 +1,35 @@
-window.onload = init;
-var context;
-var bufferLoader;
 
-function init() {
-    context = new AudioContext();
+//const audio = document.querySelector('audio');
 
-    bufferLoader = new BufferLoader(
-    context,
-    [
-        'file_example_WAV_1MG.wav'
-    ],
-    finishedLoading
-    );
+const playBtn = document.getElementById('playBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const stopBtn = document.getElementById('stopBtn');
 
-    bufferLoader.load();
-}
+const audioContext = new AudioContext();
+const audio = new Audio('file_example_WAV_1MG.wav');
 
-function finishedLoading(bufferList) {
-    // Create two sources and play them both together.
-    var source1 = context.createBufferSource();
-    source1.buffer = bufferList[0];
-    source1.connect(context.destination);
-    source1.noteOn(0);
+const source = audioContext.createMediaElementSource(audio);
+const volumeNode = audioContext.createGain();
+volumeNode.gain.value = 0.1; // Set volume to 50%
 
-}
+source.connect(volumeNode);
+volumeNode.connect(audioContext.destination);
+
+
+playBtn.addEventListener('click', () => {
+    if (audioContext.state === 'suspended') {   
+        audioContext.resume();
+    }
+    audio.play();
+});
+
+pauseBtn.addEventListener('click', () => {
+    audio.pause();
+});
+
+stopBtn.addEventListener('click', () => {
+    audio.pause();
+    audio.currentTime = 0;
+});
+
+
